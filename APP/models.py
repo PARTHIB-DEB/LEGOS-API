@@ -4,5 +4,8 @@ from django.db import models
 class legos(models.Model):
     comics=models.TextField()
     names=models.CharField(max_length=5000)
-    total=models.IntegerField()
+    total=models.IntegerField(null=True,blank=True)
     seller=models.TextField()
+    
+    def __str__(self):
+        return self.comics
