@@ -29,7 +29,7 @@ class legolist(APIView):
 
     def patch(self, request):
         data = request.data
-        obj = legos.objects.get(id=data['id'])
+        obj = legos.objects.get(comics=data['comics'])
         serializer = legoserializer(obj, data=data, partial=True)
         if serializer.is_valid():
             serializer.save()
@@ -39,7 +39,7 @@ class legolist(APIView):
 
     def delete(self, request):
         data = request.data
-        del_id = data['id']
-        obj = legos.objects.get(id=del_id)
+        del_comic_name = data['comics']
+        obj = legos.objects.get(comics=del_comic_name)
         obj.delete()
-        return Response({"Message": f"Object of id {del_id} is deleted"})
+        return Response({"Message": f"{del_comic_name} lego-object is deleted"})
