@@ -1,7 +1,6 @@
-from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from APP.seriallizers import legoserializer
+from APP.seriallizers import legoserializer,loginserializer
 from APP.models import legos
 from rest_framework.views import APIView
 
@@ -43,3 +42,17 @@ class legolist(APIView):
         obj = legos.objects.get(comics=del_comic_name)
         obj.delete()
         return Response({"Message": f"{del_comic_name} lego-object is deleted"})
+
+@api_view(['GET','POST'])
+def login(request):
+    if request.method == "POST":
+        data=request.data
+        serializer=loginserializer(data=request.data)
+        if serializer.is_valid():
+            serializer.validated_data
+            return Response(serializer.data)
+    
+        return Response(serializer.errors)
+    else:
+        return Response({"Message":"Other Methods are not allowed!!"})
+    
