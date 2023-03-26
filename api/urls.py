@@ -1,7 +1,13 @@
 from APP import views
-from django.urls import path
+from django.urls import path,include
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register(r'lego',views.legoViewSet,basename='legolist') # Can go to this url by NEW TAB 
+urlpatterns = router.urls
 
 urlpatterns = [
-    path("lego",views.legolist.as_view()),
+    path("",include(router.urls)),
+    path("lego",views.legolist.as_view()), #Can go this url in SAME TAB
     path("login",views.login),
 ]

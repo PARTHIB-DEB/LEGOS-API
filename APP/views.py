@@ -1,9 +1,11 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from APP.seriallizers import legoserializer,loginserializer
+from APP.seriallizers import legoserializer, loginserializer
 from APP.models import legos
 from rest_framework.views import APIView
+from rest_framework import viewsets
 
+# Doing CRUD ops inside same tab (just changing the url not the tab!!)
 
 class legolist(APIView):
     def get(self, request):
@@ -42,17 +44,25 @@ class legolist(APIView):
         obj = legos.objects.get(comics=del_comic_name)
         obj.delete()
         return Response({"Message": f"{del_comic_name} lego-object is deleted"})
+    
+    
 
-@api_view(['GET','POST'])
+# Just for doing CRUD ops. in a new tab using ROUTER (After registering in ROUTER)
+
+class legoViewSet(viewsets.ModelViewSet):
+    serializer_class = legoserializer
+    queryset = legos.objects.all()
+
+
+@api_view(['GET', 'POST'])
 def login(request):
     if request.method == "POST":
-        data=request.data
-        serializer=loginserializer(data=request.data)
+        data = request.data
+        serializer = loginserializer(data=request.data)
         if serializer.is_valid():
             serializer.validated_data
             return Response(serializer.data)
-    
+
         return Response(serializer.errors)
     else:
-        return Response({"Message":"Other Methods are not allowed!!"})
-    
+        return Response({"Message": "Other Methods are not allowed!!"})
