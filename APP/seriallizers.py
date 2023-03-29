@@ -11,7 +11,7 @@ class loginserializer(serializers.Serializer):
 class legoserializer(serializers.ModelSerializer):
     class Meta:
         model = legos
-        fields = ['comics','names','seller']
+        fields = ['comics','names','total','seller']
         validators = [
                 UniqueTogetherValidator(
                     queryset=legos.objects.all(),
