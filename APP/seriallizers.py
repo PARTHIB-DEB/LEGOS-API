@@ -1,11 +1,21 @@
 from rest_framework import serializers
-from APP.models import legos
-from rest_framework.validators import UniqueTogetherValidator
+from APP.models import legos,register
+from rest_framework.validators import UniqueTogetherValidator,UniqueValidator
+
+class registerserializer(serializers.ModelSerializer):    
+    class Meta:
+        model = register
+        fields = '__all__'
+        validators = [
+                UniqueValidator(
+                    queryset=register.objects.all(),
+                    message="Already Taken!!"
+                )
+            ]
 
 class loginserializer(serializers.Serializer):
-    Name=serializers.CharField()
     Username=serializers.CharField()
-    email=serializers.EmailField()
+    password=serializers.CharField()
     
 
 class legoserializer(serializers.ModelSerializer):

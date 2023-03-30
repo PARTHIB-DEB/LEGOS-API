@@ -9,3 +9,12 @@ class legos(models.Model):
     
     def __str__(self):
         return self.comics
+    
+class register(models.Model):
+    fname=models.CharField(max_length=50)
+    lname=models.CharField(max_length=50)
+    email=models.EmailField()
+    password=models.CharField(max_length=10)
+    
+    def __str__(self):
+        return self.fname
