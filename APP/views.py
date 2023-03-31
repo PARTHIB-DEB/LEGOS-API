@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from APP.seriallizers import legoserializer, loginserializer,registerserializer
-from APP.models import legos,register
+from APP.seriallizers import legoserializer, loginserializer ,registerserializer
+from APP.models import *
 from rest_framework import viewsets
 from rest_framework.views import APIView
 
@@ -84,50 +84,32 @@ class legoViewSet(viewsets.ModelViewSet):
                         return Response({"Status": "203 Not Found"})
 
 
-class registerlist(APIView):
-    def get(self, request):
-        serializer = registerserializer(register.objects.all(), many=True)
-        return Response(serializer.data)
 
-    def post(self, request):
-        try:
-            serializer = registerserializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data)
+@api_view(['POST','PUT','DELETE'])
+def registers(request):
+    if request.method == "POST" or request.method =="PUT":
+        serializer = registerserializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            serializer.validated_data
+            return Response(serializer.data)
 
-            return Response(serializer.errors)
-        except Exception as e:
-            return Response({"message":"Some Unconditional Errors Happend!!"})
-
-    def put(self, request):
-        try:
-            serializer = registerserializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data)
-
-            return Response(serializer.errors)
-        except Exception:
-            return Response({"message":"Some Unconditional Errors Happend!!"})
-
-    def delete(self, request):
+        return Response(serializer.errors)
+    else:
         data = request.data
         del_person_fname = data['fname']
         if del_person_fname != "*":
-            obj = register.objects.get(comics=del_person_fname)
+            obj = registerserializer(fname=data['fname'],many=True)
             obj.delete()
             return Response({"Message": f"Details of {del_person_fname} person is deleted"})
         else:
             legos.objects.all().delete()
             return Response({"Message": "All persons details are destroyed"})
-
-
+        
 
 @api_view(['POST'])
 def login(request):
     if request.method == "POST":
-        data = request.data
         serializer = loginserializer(data=request.data)
         if serializer.is_valid():
             serializer.validated_data
