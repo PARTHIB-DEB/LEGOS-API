@@ -13,4 +13,6 @@ Using the Django Rest framework, I constructed my first API project for LEGO toy
 **Backend(Microtools):** Django REST
 
 
+## Screenshots
 
+![App Screenshot](https://media.licdn.com/dms/image/D4D22AQFKk0A9bGZcsw/feedshare-shrink_2048_1536/0/1680279835400?e=1684368000&v=beta&t=T3rm0zphzMEW2IxaJuUCKpZzCghp83Af4LzWWl8VGFg)
