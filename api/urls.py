@@ -10,5 +10,5 @@ urlpatterns = [
     path("",include(router.urls)),
     path("lego",views.legolist.as_view()), #Can go this url in SAME TAB
     path("login",views.login),
-    path(" register",views.registers),
+    path("register",views.registers),
 ]
